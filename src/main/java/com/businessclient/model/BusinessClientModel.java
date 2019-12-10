@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "business-client")
+@Document(collection = "business_client")
 public class BusinessClientModel {
 	
 	@Id

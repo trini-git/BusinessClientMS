@@ -36,17 +36,22 @@ public class BusinessClientService implements BusinessClientServiceInterface{
 	@Override
 	public Mono<BusinessClientModel> deleteBusinessClient(BusinessClientModel businessClientModel, String id) {
 		
-		return null;
+		return businessClientRepository.findById(id)
+			.flatMap(businessClient -> {
+				businessClient.setStatus("I");
+				return businessClientRepository.save(businessClient);
+			});
 	}
 
 	@Override
 	public Mono<BusinessClientModel> updateBusinessClient(BusinessClientModel businessClientModel, String id) {
 		
-		return businessClientRepository.findById(id).flatMap(businessClient -> {
-			businessClient.setDocument(businessClientModel.getDocument());
-			businessClient.setName(businessClientModel.getName());
-			businessClient.setLastName(businessClientModel.getLastName());
-			return businessClientRepository.save(businessClient);
+		return businessClientRepository.findById(id).
+			flatMap(businessClient -> {
+				businessClient.setDocument(businessClientModel.getDocument());
+				businessClient.setName(businessClientModel.getName());
+				businessClient.setLastName(businessClientModel.getLastName());
+				return businessClientRepository.save(businessClient);
 			});
 		}
 	}
